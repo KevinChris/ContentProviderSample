@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="@string/hint_name"
+            android:inputType="textPersonName" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -39,26 +39,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/hint_contact"
             android:inputType="phone" />
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layoutContact"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="74dp"
-        android:onClick="saveContact"
-        android:text="Save Contact" />
+        android:layout_marginTop="70dp"
+        android:gravity="center"
+        android:weightSum="2">
 
-    <Button
-        android:id="@+id/button_retrieve"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="retrieveAll"
-        android:text="Retrieve All"
-        android:layout_below="@+id/button"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button" />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="saveContact"
+            android:text="@string/button_save" />
+
+        <Button
+            android:id="@+id/button_retrieve"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="retrieveAll"
+            android:text="@string/button_retrieve_all" />
+
+    </LinearLayout>
 </RelativeLayout>

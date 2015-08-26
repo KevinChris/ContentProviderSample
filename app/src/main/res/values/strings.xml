@@ -3,4 +3,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="hint_name">Name</string>
+    <string name="hint_contact">Contact No</string>
+
+    <string name="button_save">Save Contact</string>
+    <string name="button_retrieve_all">Retrieve All Contact</string>
 </resources>
