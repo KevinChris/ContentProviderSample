@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.Random;
 
 import idoandroid.database.DatabaseHandler;
 import idoandroid.database.DatabaseHelper;
@@ -27,6 +26,32 @@ public class MainActivity extends AppCompatActivity{
 
     EditText editTextName, editTextContact;
     TextInputLayout layoutName, layoutContact;
+    /**
+     * Callback for the Handler to run in UI
+     */
+    private Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+
+                case DISPLAY_RETRIEVED_CONTACT:
+                    Contact contact = (Contact) msg.obj;
+                    Toast.makeText(MainActivity.this, contact.getId() + " - " + contact.getName() + " - "
+                            + contact.getPhoneNo() + " - " + contact.getIsSynced(), Toast.LENGTH_SHORT)
+                            .show();
+                    break;
+
+                case CONTACT_SAVE_SUCCESSFUL:
+                    Toast.makeText(MainActivity.this, "Contact Saved", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case CONTACT_SAVE_FAILED:
+                    Toast.makeText(MainActivity.this, "Contact Failed", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+            return false;
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +63,6 @@ public class MainActivity extends AppCompatActivity{
 
         layoutName = (TextInputLayout) findViewById(R.id.layoutName);
         layoutContact = (TextInputLayout) findViewById(R.id.layoutContact);
-
-
     }
 
     @Override
@@ -78,12 +101,6 @@ public class MainActivity extends AppCompatActivity{
             public void run() {
 
                 /**
-                 * Generating random number range between 0 0r 1 to save the cloud sync value
-                 */
-                Random random = new Random();
-                int min = 0, max = 1;
-
-                /**
                  * Validate the fields
                  */
                 if (validateFields()) {
@@ -97,7 +114,7 @@ public class MainActivity extends AppCompatActivity{
 
                     values.put(DatabaseHelper.NAME, editTextName.getText().toString());
                     values.put(DatabaseHelper.PHONE_NUMBER, editTextContact.getText().toString());
-                    values.put(DatabaseHelper.CLOUD_SYNCED, random.nextInt((max - min) + 1) + min);
+                    values.put(DatabaseHelper.CLOUD_SYNCED, generateRandom());
 
                     /**
                      * Callback to display the message in UI
@@ -107,6 +124,10 @@ public class MainActivity extends AppCompatActivity{
                     else
                         handler.sendMessage(Message.obtain(handler, CONTACT_SAVE_FAILED));
                 }
+            }
+
+            private int generateRandom() {
+                return (Math.random() > 0.5) ? 1 : 0;
             }
         }).start();
     }
@@ -162,31 +183,4 @@ public class MainActivity extends AppCompatActivity{
             }
         }).start();
     }
-
-    /**
-     * Callback for the Handler to run in UI
-     */
-    private Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-
-                case DISPLAY_RETRIEVED_CONTACT :
-                    Contact contact = (Contact) msg.obj;
-                    Toast.makeText(MainActivity.this, contact.getId() + " - " + contact.getName() + " - "
-                            + contact.getPhoneNo() + " - " + contact.getIsSynced(), Toast.LENGTH_SHORT)
-                            .show();
-                    break;
-
-                case CONTACT_SAVE_SUCCESSFUL :
-                    Toast.makeText(MainActivity.this, "Contact Saved", Toast.LENGTH_SHORT).show();
-                    break;
-
-                case CONTACT_SAVE_FAILED :
-                    Toast.makeText(MainActivity.this, "Contact Failed", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-            return false;
-        }
-    });
 }

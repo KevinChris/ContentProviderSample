@@ -7,7 +7,7 @@ public class Contact {
     private int Id;
     private String Name;
     private long PhoneNo;
-    private Boolean IsSynced;
+    private int IsSynced;
 
     public int getId() {
         return Id;
@@ -33,11 +33,11 @@ public class Contact {
         PhoneNo = phoneNo;
     }
 
-    public Boolean getIsSynced() {
+    public int getIsSynced() {
         return IsSynced;
     }
 
-    public void setIsSynced(Boolean isSynced) {
+    public void setIsSynced(int isSynced) {
         IsSynced = isSynced;
     }
 }

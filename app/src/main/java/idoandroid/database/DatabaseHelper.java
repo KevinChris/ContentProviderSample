@@ -27,5 +27,5 @@ public class DatabaseHelper {
 
     public final static String CREATE_TABLE_CONTACTS = "CREATE TABLE " + TABLE_CONTACTS + "("
             + ID + " INTEGER PRIMARY KEY," + NAME + " TEXT,"
-            + PHONE_NUMBER + " TEXT," + CLOUD_SYNCED + " BOOLEAN " + ")";
+            + PHONE_NUMBER + " TEXT," + CLOUD_SYNCED + " INTEGER " + ")";
 }

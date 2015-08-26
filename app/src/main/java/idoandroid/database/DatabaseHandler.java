@@ -81,7 +81,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     contact.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.ID)));
                     contact.setName(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.NAME)));
                     contact.setPhoneNo(Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.PHONE_NUMBER))));
-                    contact.setIsSynced(Boolean.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.CLOUD_SYNCED))));
+                    contact.setIsSynced(Integer.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.CLOUD_SYNCED))));
                     contactList.add(contact);
                     cursor.moveToNext();
                 }
