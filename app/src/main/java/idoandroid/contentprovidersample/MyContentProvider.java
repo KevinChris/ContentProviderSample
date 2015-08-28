@@ -36,7 +36,7 @@ public class MyContentProvider extends ContentProvider {
      * Constants
      */
     private static final int CONTACTS = 1;
-    private static final int CONTACTS_GROUP_BY = 2;
+    private static final int CONTACTS_GET_BY_SYNC_ID = 2;
 
     /**
      * Utility class uses to match the URI of ContentProviders
@@ -45,7 +45,7 @@ public class MyContentProvider extends ContentProvider {
 
     static {
         URI_MATCHER.addURI(AUTHORITY_NAME, BASE_NAME + "contacts", CONTACTS);
-        URI_MATCHER.addURI(AUTHORITY_NAME, BASE_NAME + "contacts/sync", CONTACTS_GROUP_BY);
+        URI_MATCHER.addURI(AUTHORITY_NAME, BASE_NAME + "contacts/sync", CONTACTS_GET_BY_SYNC_ID);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class MyContentProvider extends ContentProvider {
                 cursor.setNotificationUri(getContext().getContentResolver(), uri);
                 break;
 
-            case CONTACTS_GROUP_BY:
+            case CONTACTS_GET_BY_SYNC_ID:
                 /**
                  * setTables is to set the list of tables to be queried.
                  */
@@ -106,11 +106,11 @@ public class MyContentProvider extends ContentProvider {
 
                 /**
                  * Now query it accordingly as per the requirement. Unless like CONTACTS, in
-                 * CONTACTS_GROUP_BY I will retrieve all the contacts from table. So the query
+                 * CONTACTS_GET_BY_SYNC_ID I will retrieve all the contacts from table. So the query
                  * result will be grouped based on CLOUD_SYNCED data
                  */
                 cursor = queryBuilder.query(db, projection, selection, selectionArgs,
-                        DatabaseHelper.CLOUD_SYNCED, null, sortOrder);
+                        null, null, sortOrder);
 
                 /**
                  * This is register to watch the content uri changes.
@@ -251,7 +251,7 @@ public class MyContentProvider extends ContentProvider {
             HashSet<String> availableColumns;
             switch (uriType) {
                 case CONTACTS:
-                case CONTACTS_GROUP_BY:
+                case CONTACTS_GET_BY_SYNC_ID:
                     availableColumns = new HashSet<>(Arrays.asList(DatabaseHelper.CONTACT_COLUMNS));
                     break;
 
