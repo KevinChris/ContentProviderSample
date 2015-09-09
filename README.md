@@ -28,7 +28,7 @@ Kavin Prabu (aka Kevin Chris) - kavinprabhu@hotmail.co.in
 
 The MIT License (MIT)
 
-Copyright (c) [2015] [iDoAndroid]
+Copyright (c) 2015 iDoAndroid
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
