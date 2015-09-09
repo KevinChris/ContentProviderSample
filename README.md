@@ -6,7 +6,7 @@ Note : This project will be more helpful if you develop both ContentProvider and
 
 ContentProvideSample is a first application with uses the SQLite Database to store data and expose that data to other application using ContentProvider. 
 
-To access the full application kindly look my another repository ContentResolverSample - (https://github.com/KevinChris/ContentResolverSample) The exposed data of this application are accessed using ContentResolver in another separate application.
+To access the full application kindly look my another repository [ContentResolverSample] (https://github.com/KevinChris/ContentResolverSample). The exposed data of this application are accessed using ContentResolver in another separate application.
 
 Components covered in this project,
 
@@ -16,9 +16,9 @@ Components covered in this project,
 
 # Blog
 
-Creating and implementing Content Providers are explained as a blog in https://idoandroid.wordpress.com/
+Creating and implementing Content Providers are explained in [iDoAndroid - Content Providers] (https://idoandroid.wordpress.com/2015/09/02/content-provider-first-post/) blog.
 
-Follow blog to know more about Android.
+Follow [iDoAndroid] (https://idoandroid.wordpress.com/) blog to know more about Android.
 
 # Author
 
