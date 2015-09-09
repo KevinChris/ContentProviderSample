@@ -54,8 +54,7 @@ public class MyContentProvider extends ContentProvider {
     }
 
     /**
-     * Query method is used to query the database of an application and the result will be returned
-     * to the requested application.
+     * Query method is used to query the database of an application and cursor will be returned
      *
      * @param uri           uri to access the application
      * @param projection    list of column in the given table
@@ -128,7 +127,7 @@ public class MyContentProvider extends ContentProvider {
     }
 
     /**
-     * Insert method is used to insert row into database from an other application
+     * Insert data into database client application
      *
      * @param uri       uri reference in an application
      * @param values    data to be inserted as content values
@@ -154,7 +153,7 @@ public class MyContentProvider extends ContentProvider {
     }
 
     /**
-     * Delete the row's from the database
+     * Delete the data from the database
      *
      * @param uri           uri of an reference
      * @param selection     selection statement to delete query
@@ -182,7 +181,7 @@ public class MyContentProvider extends ContentProvider {
     }
 
     /**
-     * Update the row's in the database
+     * Update data in the database
      * @param uri           uri reference to the process
      * @param values        content values to be updated
      * @param selection     where clause condition
@@ -239,8 +238,8 @@ public class MyContentProvider extends ContentProvider {
     }
 
     /**
-     * Check whether the request Uri contains all requested columns. If the column which is not
-     * available is requested then throw exception
+     * Check whether the requested columns are present in database. If any of the column is not
+     * available then throw exception
      *
      * @param projection columnList from content resolver application.
      * @param uriType    type of Uri which is requested.

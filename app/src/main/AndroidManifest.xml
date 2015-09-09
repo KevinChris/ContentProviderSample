@@ -16,11 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <provider
-            android:authorities="ContentProviderSample.Contacts"
             android:name=".MyContentProvider"
-            android:exported="true"/>
+            android:authorities="ContentProviderSample.Contacts"
+            android:exported="true" />
 
     </application>
 
