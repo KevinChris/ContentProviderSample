@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">ContentProviderSample</string>
+    <string name="app_name">Content Provider</string>
+    <string name="activity_display_item">Contact List</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">About Me</string>
 
     <string name="hint_name">Name</string>
     <string name="hint_contact">Contact No</string>
@@ -10,4 +10,11 @@
     <string name="button_save">Save Contact</string>
     <string name="button_retrieve_all">Retrieve All Contact</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="about_title">About Me</string>
+    <string name="about_message">Thank you for looking out my application! Any comments are welcomed.
+        \n\n Mail - kavinprabhu@hotmail.co.in
+        \n\n Blog - idoandroid.wordpress.com
+        </string>
+    <string name="about_dismiss">Dismiss</string>
 </resources>

@@ -1,31 +1,31 @@
 package idoandroid.contentprovidersample;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
-
 import idoandroid.database.DatabaseHandler;
 import idoandroid.database.DatabaseHelper;
-import idoandroid.model.Contact;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private final static int DISPLAY_RETRIEVED_CONTACT = 0;
     private final static int CONTACT_SAVE_SUCCESSFUL = 1;
     private final static int CONTACT_SAVE_FAILED = 2;
-
     EditText editTextName, editTextContact;
     TextInputLayout layoutName, layoutContact;
+    Button buttonSave;
     /**
      * Callback for the Handler to run in UI
      */
@@ -33,13 +33,6 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
-
-                case DISPLAY_RETRIEVED_CONTACT:
-                    Contact contact = (Contact) msg.obj;
-                    Toast.makeText(MainActivity.this, contact.getId() + " - " + contact.getName() + " - "
-                            + contact.getPhoneNo() + " - " + contact.getIsSynced(), Toast.LENGTH_SHORT)
-                            .show();
-                    break;
 
                 case CONTACT_SAVE_SUCCESSFUL:
                     Toast.makeText(MainActivity.this, "Contact Saved", Toast.LENGTH_SHORT).show();
@@ -61,8 +54,13 @@ public class MainActivity extends AppCompatActivity{
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextContact = (EditText) findViewById(R.id.editTextContact);
 
+        buttonSave = (Button) findViewById(R.id.button);
+        buttonSave.setOnClickListener(this);
+
         layoutName = (TextInputLayout) findViewById(R.id.layoutName);
+        layoutName.setErrorEnabled(true);
         layoutContact = (TextInputLayout) findViewById(R.id.layoutContact);
+        layoutContact.setErrorEnabled(true);
     }
 
     @Override
@@ -80,7 +78,17 @@ public class MainActivity extends AppCompatActivity{
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(getString(R.string.about_title))
+                    .setMessage(getString(R.string.about_message))
+                    .setPositiveButton(getString(R.string.about_dismiss),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
             return true;
         }
 
@@ -94,16 +102,15 @@ public class MainActivity extends AppCompatActivity{
     public void saveContact(View view) {
 
         /**
-         * Perform database operation in thread
+         * Validate the fields
          */
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                /**
-                 * Validate the fields
-                 */
-                if (validateFields()) {
+        if (validateFields()) {
+            /**
+             * Perform database operation in thread
+             */
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
 
                     /**
                      * Save contact in database
@@ -124,12 +131,17 @@ public class MainActivity extends AppCompatActivity{
                     else
                         handler.sendMessage(Message.obtain(handler, CONTACT_SAVE_FAILED));
                 }
-            }
+            }).start();
+        }
+    }
 
-            private int generateRandom() {
-                return (Math.random() > 0.5) ? 1 : 0;
-            }
-        }).start();
+    /**
+     * Generate Random Number to set the sync state of contact
+     *
+     * @return 0 or 1
+     */
+    private int generateRandom() {
+        return (Math.random() > 0.5) ? 1 : 0;
     }
 
     /**
@@ -150,6 +162,9 @@ public class MainActivity extends AppCompatActivity{
         if (editTextContact.getText().toString().contentEquals("")) {
             layoutContact.setError("Contact can't be empty");
             isValidated = false;
+        } else if (editTextContact.getText().toString().length() < 10) {
+            layoutContact.setError("Contact Number must have 10 digits");
+            isValidated = false;
         } else {
             layoutContact.setError(null);
             layoutName.setErrorEnabled(false);
@@ -164,23 +179,16 @@ public class MainActivity extends AppCompatActivity{
      */
     public void retrieveAll(View view) {
 
-        /**
-         * Thread to perform the database operation in background
-         */
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        Intent intent = new Intent(MainActivity.this, ItemViewer.class);
+        startActivity(intent);
+    }
 
-                /**
-                 * Get the content and display the message in UI
-                 */
-                List<Contact> contactList = new DatabaseHandler(MainActivity.this).retrieveContact();
-                if (contactList != null) {
-                    for (Contact contact : contactList) {
-                        handler.sendMessage(Message.obtain(handler, DISPLAY_RETRIEVED_CONTACT, contact));
-                    }
-                }
-            }
-        }).start();
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button:
+                saveContact(v);
+                break;
+        }
     }
 }
