@@ -12,7 +12,7 @@ Components covered in this project,
 
 1. How to implement SQLite database.
 2. Creating Content Provider and implementing its components
-3. Basic known problems
+3. Known issues
 
 # Blog
 
